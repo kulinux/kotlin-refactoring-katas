@@ -8,10 +8,6 @@ class ShoppingCart {
     return ArrayList(items)
   }
 
-  internal fun addItem(product: Product) {
-    this.addItemQuantity(product, 1.0)
-  }
-
   internal fun productQuantities(): Map<Product, Double> {
     return productQuantities
   }
