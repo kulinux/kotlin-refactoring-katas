@@ -28,7 +28,7 @@ Create some test cases and aim to get good enough code coverage that you feel co
 
 When you have good test cases, identify code smells such as Long Method, Feature Envy. Apply relevant refactorings.
 
-When you're confident you can handle this code, implement the new feature described below
+When you're confident [README.md](README.md)you can handle this code, implement the new feature described below
 
 ## New feature: discounted bundles
 
