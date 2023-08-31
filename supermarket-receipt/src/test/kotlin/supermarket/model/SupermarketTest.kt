@@ -1,6 +1,8 @@
 package supermarket.model
 
+import org.approvaltests.Approvals
 import org.junit.jupiter.api.Test
+import supermarket.ReceiptPrinter
 
 class SupermarketTest {
   @Test
@@ -20,6 +22,9 @@ class SupermarketTest {
 
     val receipt = teller.checksOutArticlesFrom(cart)
 
-    // Todo: complete this test
+    val receiptPrinter = ReceiptPrinter()
+
+    Approvals.verify(receiptPrinter.printReceipt(receipt))
+
   }
 }
