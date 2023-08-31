@@ -35,10 +35,18 @@ class ApprovalSupermarketTest {
     Approvals.verify(printReceipt)
   }
 
+  @Test
+  fun testAddingTwice() {
+    val cart = shoppingCart(apples to 2.5, apples to 1.0)
+
+    val printReceipt = printReceipt(Teller(catalog), cart)
+    Approvals.verify(printReceipt)
+  }
+
   @ParameterizedTest(name = "Special Offer {0}")
   @EnumSource(SpecialOfferType::class)
   fun testOffers(offerType: SpecialOfferType) {
-    val cart = shoppingCart(toothbrush to 2.0, apples to 2.5)
+    val cart = shoppingCart(toothbrush to 6.0, apples to 6.5)
 
     val teller = Teller(catalog)
     teller.addSpecialOffer(offerType, toothbrush, 10.0)
