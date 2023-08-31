@@ -1,6 +1,6 @@
 package supermarket.model
 
-class ProductQuantity(
+data class ProductQuantity(
   val product: Product,
   val quantity: Double
 )

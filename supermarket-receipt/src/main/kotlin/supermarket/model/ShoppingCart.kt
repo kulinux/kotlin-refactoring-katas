@@ -2,29 +2,24 @@ package supermarket.model
 
 class ShoppingCart {
   private val items = ArrayList<ProductQuantity>()
-  internal var productQuantities: MutableMap<Product, Double> = HashMap()
 
   internal fun getItems(): List<ProductQuantity> {
     return ArrayList(items)
   }
 
-  internal fun productQuantities(): Map<Product, Double> {
-    return productQuantities
+  private fun productQuantities(): Map<Product, Double> {
+    return items.groupBy( { it.product }, { it.quantity})
+      .mapValues { it.value.sum() }
   }
 
 
   fun addItemQuantity(product: Product, quantity: Double) {
     items.add(ProductQuantity(product, quantity))
-    if (productQuantities.containsKey(product)) {
-      productQuantities[product] = productQuantities[product]!! + quantity
-    } else {
-      productQuantities[product] = quantity
-    }
   }
 
   internal fun handleOffers(receipt: Receipt, offers: Map<Product, Offer>, catalog: SupermarketCatalog) {
     for (p in productQuantities().keys) {
-      val quantity = productQuantities[p]!!
+      val quantity = productQuantities()[p]!!
       if (offers.containsKey(p)) {
         val offer = offers[p]!!
         val unitPrice = catalog.getUnitPrice(p)
@@ -66,4 +61,5 @@ class ShoppingCart {
       }
     }
   }
+
 }
