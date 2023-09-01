@@ -1,7 +1,6 @@
 package supermarket
 
 import java.util.Locale
-import supermarket.model.ProductUnit
 import supermarket.model.Receipt
 import supermarket.model.ReceiptItem
 
@@ -44,7 +43,7 @@ class ReceiptPrinter @JvmOverloads constructor(private val columns: Int = 40) {
   }
 
   private fun presentQuantity(item: ReceiptItem): String {
-    return if (ProductUnit.Each.equals(item.product.unit))
+    return if (item.product.isQuantityInt())
       String.format("%x", item.quantity.toInt())
     else
       String.format(Locale.UK, "%.3f", item.quantity)

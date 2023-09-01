@@ -14,8 +14,8 @@ class ApprovalSupermarketTest {
 
   @BeforeEach
   fun setUp() {
-    toothbrush = Product("toothbrush", ProductUnit.Each)
-    apples = Product("apples", ProductUnit.Kilo)
+    toothbrush = Product.each("toothbrush")
+    apples = Product.kilo("apples")
     catalog = catalog(apples to 1.99, toothbrush to 0.99)
   }
 
