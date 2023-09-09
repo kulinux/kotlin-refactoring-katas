@@ -1,11 +1,45 @@
 package supermarket
 
-import java.util.Locale
 import supermarket.model.Receipt
 import supermarket.model.ReceiptItem
+import java.util.*
 
 class ReceiptPrinter @JvmOverloads constructor(private val columns: Int = 40) {
   fun printReceipt(receipt: Receipt): String {
+    return handleItems(receipt) +
+      handleDiscounts(receipt) +
+      handleTotal(receipt)
+  }
+
+  private fun handleTotal(receipt: Receipt): String {
+    val result = StringBuilder()
+    result.append("\n")
+    val pricePresentation = String.format(Locale.UK, "%.2f", receipt.totalPrice as Double)
+    val total = "Total: "
+    val whitespace = getWhitespace(this.columns - total.length - pricePresentation.length)
+    result.append(total).append(whitespace).append(pricePresentation)
+    return result.toString()
+  }
+
+  private fun handleDiscounts(receipt: Receipt): String {
+    val result = StringBuilder()
+    for (discount in receipt.getDiscounts()) {
+      val productPresentation = discount.product.name
+      val pricePresentation = String.format(Locale.UK, "%.2f", discount.discountAmount)
+      val description = discount.description
+      result.append(description)
+      result.append("(")
+      result.append(productPresentation)
+      result.append(")")
+      result.append(getWhitespace(this.columns - 3 - productPresentation.length - description.length - pricePresentation.length))
+      result.append("-")
+      result.append(pricePresentation)
+      result.append("\n")
+    }
+    return result.toString()
+  }
+
+  private fun handleItems(receipt: Receipt): String {
     val result = StringBuilder()
     for (item in receipt.getItems()) {
       val price = String.format(Locale.UK, "%.2f", item.totalPrice)
@@ -21,24 +55,6 @@ class ReceiptPrinter @JvmOverloads constructor(private val columns: Int = 40) {
       }
       result.append(line)
     }
-    for (discount in receipt.getDiscounts()) {
-      val productPresentation = discount.product.name
-      val pricePresentation = String.format(Locale.UK, "%.2f", discount.discountAmount)
-      val description = discount.description
-      result.append(description)
-      result.append("(")
-      result.append(productPresentation)
-      result.append(")")
-      result.append(getWhitespace(this.columns - 3 - productPresentation.length - description.length - pricePresentation.length))
-      result.append("-")
-      result.append(pricePresentation)
-      result.append("\n")
-    }
-    result.append("\n")
-    val pricePresentation = String.format(Locale.UK, "%.2f", receipt.totalPrice as Double)
-    val total = "Total: "
-    val whitespace = getWhitespace(this.columns - total.length - pricePresentation.length)
-    result.append(total).append(whitespace).append(pricePresentation)
     return result.toString()
   }
 
