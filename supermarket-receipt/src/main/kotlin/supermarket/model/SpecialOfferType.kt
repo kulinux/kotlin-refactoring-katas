@@ -1,5 +1,5 @@
 package supermarket.model
 
 enum class SpecialOfferType {
-  ThreeForTwo, TenPercentDiscount, TwoForAmount, FiveForAmount
+  ThreeForTwo, TenPercentDiscount, TwoForAmount, FiveForAmount, Bundle
 }

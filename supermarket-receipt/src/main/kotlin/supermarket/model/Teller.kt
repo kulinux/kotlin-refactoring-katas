@@ -7,6 +7,10 @@ class Teller(private val catalog: SupermarketCatalog) {
     this.offers[product] = Offer.build(offerType, product, argument)
   }
 
+  fun addSpecialOffer(offerType: SpecialOfferType, product: List<Product>, argument: Double) {
+    TODO("Not yet implemented")
+  }
+
   fun checksOutArticlesFrom(theCart: ShoppingCart): Receipt {
     val receipt = Receipt()
     val productQuantities = theCart.getItems()
@@ -18,4 +22,6 @@ class Teller(private val catalog: SupermarketCatalog) {
 
     return receipt
   }
+
+
 }
