@@ -1,14 +1,14 @@
 package supermarket.model
 
 class Teller(private val catalog: SupermarketCatalog) {
-  private val offers = HashMap<Product, Offer>()
+  private var offers = emptyList<Offer>()
 
   fun addSpecialOffer(offerType: SpecialOfferType, product: Product, argument: Double) {
-    this.offers[product] = Offer.build(offerType, product, argument)
+    this.offers = this.offers + Offer.build(offerType, setOf(product), argument)
   }
 
-  fun addSpecialOffer(offerType: SpecialOfferType, product: List<Product>, argument: Double) {
-    TODO("Not yet implemented")
+  fun addSpecialOffer(offerType: SpecialOfferType, products: Set<Product>, argument: Double) {
+    this.offers = this.offers + Offer.build(offerType, products, argument)
   }
 
   fun checksOutArticlesFrom(theCart: ShoppingCart): Receipt {

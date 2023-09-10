@@ -32,7 +32,7 @@ class ReceiptPrinter @JvmOverloads constructor(private val columns: Int = 40) {
 
 
   private fun handleDiscount(discount: Discount): String {
-    val productPresentation = discount.product.name
+    val productPresentation = discount.products.joinToString { it.name }
     val pricePresentation = String.format(Locale.UK, "%.2f", discount.discountAmount)
     val description = discount.description
 

@@ -17,17 +17,26 @@ class ShoppingCart {
     items.add(ProductQuantity(product, quantity))
   }
 
-  internal fun handleOffers(receipt: Receipt, offers: Map<Product, Offer>, catalog: SupermarketCatalog) {
+  internal fun handleOffers(receipt: Receipt, offers: List<Offer>, catalog: SupermarketCatalog) {
     for (productQuantity in productQuantities().entries) {
       val product = productQuantity.key
       val quantity = productQuantity.value
       val unitPrice = catalog.getUnitPrice(product)
 
-      offers[product]
+      offerWithProduct(offers, product)
         ?.discount(unitPrice, quantity)
         ?.let { receipt.addDiscount(it) }
 
     }
+  }
+
+  private fun offerWithProduct(offers: List<Offer>, product: Product): Offer? {
+    for(offer in offers) {
+      if(offer.products.contains(product)) {
+        return offer
+      }
+    }
+    return null
   }
 
 }
