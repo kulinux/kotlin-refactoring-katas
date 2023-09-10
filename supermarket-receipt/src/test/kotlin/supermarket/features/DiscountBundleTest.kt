@@ -5,15 +5,14 @@ import supermarket.model.*
 import kotlin.test.assertEquals
 
 class DiscountBundleTest {
-  /*
   @Test
   fun discountBundle() {
     //When bundle of dental kit is set up
     val catalog = FakeCatalog()
     val toothbrush = Product.each("toothbrush")
     val toothpaste = Product.each("toothpaste")
-    catalog.addProduct(toothbrush, 5.0)
-    catalog.addProduct(toothpaste, 5.0)
+    catalog.addProduct(toothbrush, 50.0)
+    catalog.addProduct(toothpaste, 50.0)
     val teller = Teller(catalog)
     teller.addSpecialOffer(SpecialOfferType.Bundle, setOf(toothbrush, toothpaste), 10.0)
 
@@ -24,9 +23,7 @@ class DiscountBundleTest {
 
     //Then I have a 10% discount
     val receipt = teller.checksOutArticlesFrom(shoppingCart)
-    assertEquals(9.0, receipt.totalPrice)
+    assertEquals(90.0, receipt.totalPrice)
   }
-
-   */
 
 }

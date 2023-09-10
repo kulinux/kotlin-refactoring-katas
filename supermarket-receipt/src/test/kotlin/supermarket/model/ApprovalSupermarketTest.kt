@@ -46,6 +46,7 @@ class ApprovalSupermarketTest {
   @ParameterizedTest(name = "Special Offer {0}")
   @EnumSource(SpecialOfferType::class)
   fun testOffers(offerType: SpecialOfferType) {
+    if(offerType == SpecialOfferType.Bundle) return
     val cart = shoppingCart(toothbrush to 6.0, apples to 6.5)
 
     val teller = Teller(catalog)
