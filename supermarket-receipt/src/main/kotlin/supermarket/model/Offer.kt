@@ -29,7 +29,7 @@ abstract class Offer protected constructor(
 }
 
 
-private abstract class OnProductOffer(product: Product, argument: Double) : Offer(setOf(product), argument) {
+private abstract class OneProductOffer(product: Product, argument: Double) : Offer(setOf(product), argument) {
   protected abstract fun discountOfSingleProduct(unitPrice: Double, quantity: Double): Discount?
 
   override fun discount(catalog: SupermarketCatalog, productQuantities: Map<Product, Double>): Discount? {
@@ -47,7 +47,7 @@ private abstract class OnProductOffer(product: Product, argument: Double) : Offe
 }
 
 
-private class TwoForAmount(product: Product, argument: Double) : OnProductOffer(product, argument) {
+private class TwoForAmount(product: Product, argument: Double) : OneProductOffer(product, argument) {
 
   override fun discountOfSingleProduct(unitPrice: Double, quantity: Double): Discount? {
     val quantityAsInt = quantity.toInt()
@@ -60,14 +60,14 @@ private class TwoForAmount(product: Product, argument: Double) : OnProductOffer(
   }
 }
 
-private class TenPercentDiscount(product: Product, argument: Double) : OnProductOffer(product, argument) {
+private class TenPercentDiscount(product: Product, argument: Double) : OneProductOffer(product, argument) {
 
   override fun discountOfSingleProduct(unitPrice: Double, quantity: Double): Discount {
     return Discount(products, "$argument% off", quantity * unitPrice * argument / 100.0)
   }
 }
 
-private class ThreeForTwo(product: Product, argument: Double) : OnProductOffer(product, argument) {
+private class ThreeForTwo(product: Product, argument: Double) : OneProductOffer(product, argument) {
 
   override fun discountOfSingleProduct(unitPrice: Double, quantity: Double): Discount {
     val quantityAsInt = quantity.toInt()
@@ -78,7 +78,7 @@ private class ThreeForTwo(product: Product, argument: Double) : OnProductOffer(p
   }
 }
 
-private class FiveForAmount(product: Product, argument: Double) : OnProductOffer(product, argument) {
+private class FiveForAmount(product: Product, argument: Double) : OneProductOffer(product, argument) {
 
   override fun discountOfSingleProduct(unitPrice: Double, quantity: Double): Discount {
     val quantityAsInt = quantity.toInt()
@@ -93,7 +93,12 @@ private class Bundle(products: Set<Product>, argument: Double) : Offer(products,
   override fun discount(catalog: SupermarketCatalog, productQuantities: Map<Product, Double>): Discount? {
     val totalPrice = productQuantities.map { (product, _) -> catalog.getUnitPrice(product) }.sum()
     val discountTotal = totalPrice * argument / 100
-    return Discount(products, "not implemented", discountTotal)
+    val numberOfBundlesPack = products.minOf { productQuantities[it] ?: 0.0 }
+    return Discount(
+      products,
+      "$numberOfBundlesPack of Bundle with $argument of discount",
+      discountTotal * numberOfBundlesPack
+    )
   }
 }
 

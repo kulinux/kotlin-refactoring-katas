@@ -33,5 +33,24 @@ class OfferTest {
     assertEquals(5.0, discount?.discountAmount)
   }
 
+  @Test
+  fun shouldDiscountAn5bundleForTwoOfEach() {
+    val offer = Offer.build(SpecialOfferType.Bundle, setOf(toothbrush, toothpaste), 5.0)
+
+    val discount = offer.discount(catalog, mapOf(toothbrush to 2.0, toothpaste to 2.0))
+
+    assertEquals(10.0, discount?.discountAmount)
+  }
+
+  @Test
+  fun shouldDiscountAn5bundleWithTwoAndOneElement() {
+    val offer = Offer.build(SpecialOfferType.Bundle, setOf(toothbrush, toothpaste), 5.0)
+
+    val discount = offer.discount(catalog, mapOf(toothbrush to 1.0, toothpaste to 2.0))
+
+    assertEquals(5.0, discount?.discountAmount)
+  }
+
+
 
 }
